@@ -6,7 +6,7 @@ Einsendeaufgabe  Domain Specific Language (DSL)
 
 ## Aufgabe Domain Specific Language
 
- - Beschäftigung dme Themengebiet DSL
+ - Beschäftigung mit dem Themengebiet DSL
  - Erstellen einer eigenen DSL
 
 ## Lösung Domain Specific Language
