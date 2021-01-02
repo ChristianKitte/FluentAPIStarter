@@ -6,12 +6,12 @@
     public enum FileCreation
     {
         /// <summary>
-        /// Existiert keine Datei, so wird eine neue Datei angelegt, ansonsten angehangen
+        /// Existiert keine Datei, so wird eine neue Datei angelegt, ansonsten wird der Inhalt angehangen
         /// </summary>
         Anhängen,
 
         /// <summary>
-        /// Überschreibt eine vorhandene Datei ohne Vorwarnung oder legt eine neue an
+        /// Legt eine neue Datei an. Eine vorhandene Datei wird ohne Vorwarnung überschrieben
         /// </summary>
         Überschreiben
     }

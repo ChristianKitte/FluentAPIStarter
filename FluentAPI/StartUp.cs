@@ -2,15 +2,28 @@
 
 namespace FluentAPI
 {
+    /// <summary>
+    /// Der Startpunkt der Anwendung. Hierbei handelt es sich nicht um die reguläre ASP StartUp Klasse.
+    /// </summary>
     public class StartUp
     {
+        /// <summary>
+        /// Hält eine Instanz von IFileLineWriter
+        /// </summary>
         private IFileLineWriter _fileLineWriter;
 
+        /// <summary>
+        /// Der Konstruktor der Klasse
+        /// </summary>
+        /// <param name="fileLineWriter">Eine Instanz von IFileLineWriter via Dependencies Injection</param>
         public StartUp(IFileLineWriter fileLineWriter)
         {
             _fileLineWriter = fileLineWriter;
         }
 
+        /// <summary>
+        /// Die Startmethode der Anwendung mit Beipielcode zur Verwendung der DSL
+        /// </summary>
         public void Run()
         {
             var x = _fileLineWriter

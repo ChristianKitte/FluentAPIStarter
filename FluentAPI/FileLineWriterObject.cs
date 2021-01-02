@@ -3,7 +3,7 @@
 namespace FluentAPI
 {
     /// <summary>
-    /// Hält die Daten für die Ausgabe in eine Datei in einem unveränderbares Datenobjekt 
+    /// Hält die Daten für die Ausgabe in eine Datei in einem unveränderbares Datenobjekt (Value Object) 
     /// </summary>
     public record FileLineWriterObject
     {

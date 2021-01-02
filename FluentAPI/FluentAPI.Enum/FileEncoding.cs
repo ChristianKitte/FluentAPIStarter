@@ -1,7 +1,7 @@
 ﻿namespace FluentAPI.Enum
 {
     /// <summary>
-    /// Bietet die unterstützten Codierungen an
+    /// Legt die Codierung fest, mit der ausgegeben wird
     /// </summary>
     public enum FileEncoding
     {
