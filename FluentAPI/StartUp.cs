@@ -26,17 +26,17 @@ namespace FluentAPI
         /// </summary>
         public void Run()
         {
-            var x = _fileLineWriter
+            var writer = _fileLineWriter
                 .AusgabeDurch(FileCreation.Überschreiben)
                 .VerwendeDateinamen("Datei 1.txt")
                 .VerwendeZurCodierung(FileEncoding.Auto)
-                .SpeicherInVerzeichnis("c:", "FluentApiTest")
+                .SpeicherInVerzeichnis("c:", "FluentApi")
                 .Schreibe("Ausgabe Datei 1");
 
-            x.VerwendeDateinamen("Datei 2.txt")
+            writer.VerwendeDateinamen("Datei 2.txt")
                 .Schreibe("Ausgabe Datei 2");
 
-            bool status = x.WarDieAktionErfolgreich();
+            bool status = writer.WarDieAktionErfolgreich();
         }
     }
 }
