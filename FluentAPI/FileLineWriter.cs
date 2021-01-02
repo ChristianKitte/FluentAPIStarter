@@ -38,7 +38,7 @@ namespace FluentAPI
         /// <summary>
         /// Das aktuelle FileLineWriterObject (Value Object)
         /// </summary>
-        protected FileLineWriterObject AktuellesFileLineWriterObject { get; set; }
+        protected FileLineWriterObject CurrentFileLineWriterObject { get; set; }
 
         /// <summary>
         /// True, wenn der letzte Schreibvorgang erfolgreich war, sonst False
@@ -132,52 +132,9 @@ namespace FluentAPI
 
             try
             {
-                if (AktuellesFileLineWriterObject != null)
+                if (CurrentFileLineWriterObject != null)
                 {
-                    string vollständigerPfad = System.IO.Path.Join(AktuellesFileLineWriterObject.FilePath,
-                        AktuellesFileLineWriterObject.FileName);
-
-                    FileMode aktuellerMode = FileMode.Append;
-                    if (FileCreation == FileCreation.Überschreiben)
-                    {
-                        aktuellerMode = FileMode.Create;
-                    }
-
-                    Encoding aktuelleCodierung = Encoding.Default;
-                    switch (AktuellesFileLineWriterObject.FileEncoding)
-                    {
-                        case FileEncoding.Utf8:
-                            aktuelleCodierung = Encoding.UTF8;
-                            break;
-                        case FileEncoding.Utf16:
-                            aktuelleCodierung = Encoding.Unicode;
-                            break;
-                        case FileEncoding.Utf32:
-                            aktuelleCodierung = Encoding.UTF32;
-                            break;
-                    }
-
-                    if (!System.IO.Directory.Exists(AktuellesFileLineWriterObject.FilePath))
-                    {
-                        System.IO.Directory.CreateDirectory(AktuellesFileLineWriterObject.FilePath);
-                    }
-
-                    if (System.IO.Directory.Exists(AktuellesFileLineWriterObject.FilePath))
-                    {
-                        using (FileStream fileStream = new FileStream(vollständigerPfad, aktuellerMode))
-                        {
-                            StreamWriter ausgabe = new StreamWriter(fileStream, aktuelleCodierung);
-                            ausgabe.WriteLine(AktuellesFileLineWriterObject.LineContent);
-                            ausgabe.Flush();
-                            ausgabe.Close();
-                        }
-
-                        CurrentState = true;
-                    }
-                    else
-                    {
-                        CurrentState = false;
-                    }
+                    CurrentState = WriteFile(CurrentFileLineWriterObject);
                 }
                 else
                 {
@@ -190,6 +147,97 @@ namespace FluentAPI
             }
 
             return AktualisiereEigenschafte(FilePath, FileName, FileEncoding, FileCreation, LineContent);
+        }
+
+        /// <summary>
+        /// Erzeugt eine Datei und gibt den in writerObj hinterlegten Inhalt aus
+        /// </summary>
+        /// <param name="writerObj">Das aktuelle FileLineWriterObject</param>
+        /// <returns>True, wenn die Ausgabe erfolgreich war, sonst False</returns>
+        private bool WriteFile(FileLineWriterObject writerObj)
+        {
+            string vollständigerPfad = System.IO.Path.Join(writerObj.FilePath,
+                writerObj.FileName);
+
+            var aktuellerMode = GetAktuellerMode(writerObj);
+
+            var aktuelleCodierung = GetAktuelleCodierung(writerObj);
+
+            if (GetCurrentDirectory(writerObj).Exists)
+            {
+                using (FileStream fileStream = new FileStream(vollständigerPfad, aktuellerMode))
+                {
+                    StreamWriter ausgabe = new StreamWriter(fileStream, aktuelleCodierung);
+                    ausgabe.WriteLine(CurrentFileLineWriterObject.LineContent);
+                    ausgabe.Flush();
+                    ausgabe.Close();
+                }
+
+                CurrentState = true;
+            }
+            else
+            {
+                CurrentState = false;
+            }
+
+            return CurrentState;
+        }
+
+        /// <summary>
+        /// Übersetzt die DSL in Bezug zur Überschreibung auf die zu verwendenen Eigenschaften (FileMode)
+        /// </summary>
+        /// <param name="writerObj">Das aktuelle FileLineWriterObject</param>
+        /// <returns>Gibt die zu verwendene Codierung zurück</returns>
+        private FileMode GetAktuellerMode(FileLineWriterObject writerObj)
+        {
+            FileMode aktuellerMode = FileMode.Append;
+            if (writerObj.FileCreation == FileCreation.Überschreiben)
+            {
+                aktuellerMode = FileMode.Create;
+            }
+
+            return aktuellerMode;
+        }
+
+        /// <summary>
+        /// Übersetzt die DSL in Bezug zur Kodierung auf die zu verwendenen Eigenschaften (Encoding)
+        /// </summary>
+        /// <param name="writerObj">Das aktuelle FileLineWriterObject</param>
+        /// <returns>Gibt die zu verwendene Codierung zurück</returns>
+        private Encoding GetAktuelleCodierung(FileLineWriterObject writerObj)
+        {
+            Encoding aktuelleCodierung = Encoding.Default;
+            switch (writerObj.FileEncoding)
+            {
+                case FileEncoding.Utf8:
+                    aktuelleCodierung = Encoding.UTF8;
+                    break;
+                case FileEncoding.Utf16:
+                    aktuelleCodierung = Encoding.Unicode;
+                    break;
+                case FileEncoding.Utf32:
+                    aktuelleCodierung = Encoding.UTF32;
+                    break;
+            }
+
+            return aktuelleCodierung;
+        }
+
+        /// <summary>
+        /// Stellt sicher, dass das Zielverzeichnis existiert und legt ggf ein neues Verzeichnis an
+        /// </summary>
+        /// <param name="writerObj">Das aktuelle FileLineWriterObject</param>
+        /// <returns>Ein Instanz von DirectoryInfo für das Zielverzeichnis</returns>
+        private DirectoryInfo GetCurrentDirectory(FileLineWriterObject writerObj)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(writerObj.FilePath);
+
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+            }
+
+            return dirInfo;
         }
 
         /// <summary>
@@ -225,7 +273,7 @@ namespace FluentAPI
             this.FileCreation = fileCreation;
             this.LineContent = lineContent;
 
-            this.AktuellesFileLineWriterObject =
+            this.CurrentFileLineWriterObject =
                 new FileLineWriterObject(FilePath, FileName, FileEncoding, FileCreation, LineContent);
 
             return this;
