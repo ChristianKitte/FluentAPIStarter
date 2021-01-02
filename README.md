@@ -33,5 +33,6 @@ eines Textes kann hierdurch folgendermaßen ausgegeben werden:
 Der Code erzeugt die Dateien ***c:\FluentAPI\Datei 1.txt*** und ***c:\FluentAPI\Datei 2.txt*** mit den Texten ***Ausgabe Datei 1*** und ***Ausgabe Datei 2***. Wenn 
 die Aktion fehlerfrei ausgeführt wurde, hat ***status*** den Wert ***True***, ansonsten ***False***.
 
-Kern der Anwendung ist das ***FileLineWriterObject***, welches als value object für die Ausgabedaten dient und mit Hilfe des Typs ***record*** umgesetzt wurde. Die 
-DSL selbst wird in der Klasse FileLineWriterObject definiert und übersetzt. 
+Kern der Anwendung ist das [***FileLineWriterObject***](https://github.com/ChristianKitte/FluentAPIStarter/blob/master/FluentAPI/FileLineWriterObject.cs), welches 
+als value object für die Ausgabedaten dient und mit Hilfe des Typs ***record*** umgesetzt wurde. Die DSL selbst wird in der Klasse 
+[***FileLineWriterObject***](https://github.com/ChristianKitte/FluentAPIStarter/blob/master/FluentAPI/FileLineWriter.cs) definiert und übersetzt. 
