@@ -36,3 +36,4 @@ die Aktion fehlerfrei ausgeführt wurde, hat ***status*** den Wert ***True***, a
 Kern der Anwendung ist das [***FileLineWriterObject***](https://github.com/ChristianKitte/FluentAPIStarter/blob/master/FluentAPI/FileLineWriterObject.cs), welches 
 als value object für die Ausgabedaten dient und mit Hilfe des Typs ***record*** umgesetzt wurde. Die DSL selbst wird in der Klasse 
 [***FileLineWriterObject***](https://github.com/ChristianKitte/FluentAPIStarter/blob/master/FluentAPI/FileLineWriter.cs) definiert und übersetzt. 
+Diese muss somit verfügbar sein.
