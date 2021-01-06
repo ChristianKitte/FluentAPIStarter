@@ -1,4 +1,7 @@
-(Editor: https://stackedit.io/)
+(Editor: https://stackedit.io/)<br>
+(Info Badge TC: https://patriksvensson.se/2014/01/displaying-teamcity-build-status-on-github/)
+
+![Build Status](https://advancedsoftwaretechnik.beta.teamcity.com/app/rest/builds/buildType:id:FluentAPIStarter_Build/statusIcon)
 
 Verfahren und Werkzeuge moderner Softwareentwicklug
 Wintersemester 20/21
